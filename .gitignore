@@ -1,3 +1,29 @@
-node_modules/
+# === Java / Maven / Spring Boot ===
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+backend/*.iml
+backend/.idea/
+*.class
+*.jar
+*.war
+
+# Variáveis de ambiente / segredos
 .env
+.env.*
+backend/src/main/resources/application-local.properties
+
+# === Node / React / Vite ===
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/*.local
+
+# === IDEs ===
+.idea/
+.vscode/
+*.iml
 .DS_Store
+
+# === Logs ===
+*.log
+npm-debug.log*
