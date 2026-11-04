@@ -118,3 +118,23 @@ a { color: var(--primaria); }
   .topbar { gap: 0.75rem; }
   .conteudo { padding-top: 1rem; }
 }
+
+/* pedidos */
+.campo textarea {
+  padding: 0.55rem 0.7rem; border: 1px solid var(--borda); border-radius: 8px;
+  background: var(--bg); color: var(--texto); font: inherit; resize: vertical;
+}
+.campo textarea:focus { outline: 2px solid var(--primaria); outline-offset: 1px; }
+.status { padding: 0.2rem 0.65rem; border-radius: 999px; font-size: 0.78rem; font-weight: 600; height: fit-content; white-space: nowrap; }
+.status-pendente { background: #fff3cd; color: #7a5b00; }
+.status-em_analise { background: #dbeafe; color: #1d4ed8; }
+.status-aprovado { background: var(--ok-bg); color: var(--ok); }
+.status-reprovado, .status-cancelado { background: var(--erro-bg); color: var(--perigo); }
+.status-contratado { background: #ede9fe; color: #5b21b6; }
+@media (prefers-color-scheme: dark) {
+  .status-pendente { background: #3d3210; color: #f5d56b; }
+  .status-em_analise { background: #172a4d; color: #8db4ff; }
+  .status-contratado { background: #2a1f4d; color: #b9a2ff; }
+}
+.parecer { margin: 0; padding: 0.6rem 0.8rem; border-left: 3px solid var(--primaria); background: var(--bg); border-radius: 4px; }
+.avaliacao { display: flex; flex-direction: column; gap: 0.75rem; border-top: 1px solid var(--borda); padding-top: 0.75rem; }

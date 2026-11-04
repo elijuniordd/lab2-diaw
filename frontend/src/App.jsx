@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout'
 import PrivateRoute from './components/PrivateRoute'
 import { AuthProvider } from './context/AuthContext'
+import Automoveis from './pages/Automoveis'
 import Cadastro from './pages/Cadastro'
 import Clientes from './pages/Clientes'
 import Login from './pages/Login'
@@ -17,6 +18,7 @@ export default function App() {
           <Route element={<PrivateRoute />}>
             <Route element={<Layout />}>
               <Route path="/clientes" element={<Clientes />} />
+              <Route path="/automoveis" element={<Automoveis />} />
               <Route path="/pedidos" element={<Pedidos />} />
             </Route>
           </Route>

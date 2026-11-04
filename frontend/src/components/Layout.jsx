@@ -16,6 +16,7 @@ export default function Layout() {
         <strong className="marca">🚗 Aluguel de Carros</strong>
         <nav>
           <NavLink to="/clientes">Clientes</NavLink>
+          <NavLink to="/automoveis">Automóveis</NavLink>
           <NavLink to="/pedidos">Pedidos</NavLink>
         </nav>
         <div className="usuario">
