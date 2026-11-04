@@ -160,6 +160,8 @@ Configure como variáveis de ambiente do sistema (nunca versione senhas):
 | `SPRING_DATASOURCE_URL` | URL JDBC do Supabase (aba *Connect*). | `jdbc:postgresql://<host>:5432/postgres?sslmode=require` |
 | `SPRING_DATASOURCE_USERNAME` | Usuário do banco. | `postgres` |
 | `SPRING_DATASOURCE_PASSWORD` | Senha do banco. | `********` |
+| `APP_JWT_SECRET` | Segredo para assinar os JWT (mín. 32 caracteres). Gere com `openssl rand -base64 48`. | `********` |
+| `APP_JWT_EXPIRATION_MINUTES` | (opcional) Validade do token em minutos. Padrão: 120. | `120` |
 | `JWT_SECRET` | Chave secreta para assinatura de tokens. | `chave_super_segura_base64` |
 
 #### Front-end (React, Vite)
