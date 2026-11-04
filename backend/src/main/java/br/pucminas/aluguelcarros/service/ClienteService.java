@@ -16,6 +16,7 @@ import br.pucminas.aluguelcarros.model.Rendimento;
 import br.pucminas.aluguelcarros.model.Role;
 import br.pucminas.aluguelcarros.model.Usuario;
 import br.pucminas.aluguelcarros.repository.ClienteRepository;
+import br.pucminas.aluguelcarros.repository.PedidoRepository;
 import br.pucminas.aluguelcarros.repository.UsuarioRepository;
 
 /**
@@ -32,10 +33,12 @@ public class ClienteService {
 
     private final ClienteRepository clientes;
     private final UsuarioRepository usuarios;
+    private final PedidoRepository pedidos;
 
-    public ClienteService(ClienteRepository clientes, UsuarioRepository usuarios) {
+    public ClienteService(ClienteRepository clientes, UsuarioRepository usuarios, PedidoRepository pedidos) {
         this.clientes = clientes;
         this.usuarios = usuarios;
+        this.pedidos = pedidos;
     }
 
     public ClienteResponse criar(String login, ClienteRequest req) {
@@ -93,6 +96,9 @@ public class ClienteService {
             throw new AcessoNegadoException("Agentes não podem remover clientes");
         }
         exigirDono(c, login);
+        if (pedidos.existsByClienteId(id)) {
+            throw new ConflitoException("Não é possível remover o cadastro: existem pedidos associados");
+        }
         clientes.delete(c);
     }
 
