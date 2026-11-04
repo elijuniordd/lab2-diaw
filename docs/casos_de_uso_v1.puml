@@ -1,0 +1,53 @@
+@startuml casos_de_uso_v1
+title Diagrama de Casos de Uso (v1) - Sistema de Aluguel de Carros
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Usuário" as Usuario
+actor "Cliente" as Cliente
+actor "Agente" as Agente
+actor "Empresa" as Empresa
+actor "Banco" as Banco
+
+Cliente --|> Usuario
+Agente --|> Usuario
+Empresa --|> Agente
+Banco --|> Agente
+
+rectangle "Sistema de Aluguel de Carros" {
+  usecase "Fazer login" as UC_Login
+  usecase "Cadastrar-se" as UC_Cadastro
+  usecase "Manter dados do cliente\n(CRUD, até 3 rendimentos)" as UC_Cliente
+
+  usecase "Introduzir pedido" as UC_Criar
+  usecase "Consultar pedidos / status" as UC_Consultar
+  usecase "Modificar pedido" as UC_Modificar
+  usecase "Cancelar pedido" as UC_Cancelar
+  usecase "Confirmar execução do contrato" as UC_Contratar
+
+  usecase "Avaliar pedido\n(parecer financeiro)" as UC_Avaliar
+  usecase "Modificar pedido (agente)" as UC_ModAgente
+  usecase "Gerenciar automóveis" as UC_Auto
+  usecase "Associar contrato de crédito" as UC_Credito
+}
+
+Usuario --> UC_Login
+Cliente --> UC_Cadastro
+Cliente --> UC_Cliente
+Cliente --> UC_Criar
+Cliente --> UC_Consultar
+Cliente --> UC_Modificar
+Cliente --> UC_Cancelar
+Cliente --> UC_Contratar
+
+Agente --> UC_Avaliar
+Agente --> UC_ModAgente
+Agente --> UC_Consultar
+Empresa --> UC_Auto
+Banco --> UC_Credito
+
+UC_Criar ..> UC_Login : <<include>>
+UC_Consultar ..> UC_Login : <<include>>
+UC_Contratar ..> UC_Avaliar : <<include>>\n(requer parecer positivo)
+UC_Credito .up.> UC_Contratar : <<extend>>
+@enduml

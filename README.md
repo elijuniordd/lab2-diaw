@@ -1,7 +1,3 @@
-<!-- README baseado no template do Prof. Dr. João Paulo Aramuni: https://github.com/joaopauloaramuni/desenvolvimento-e-integracao-de-aplicacoes-web/blob/main/TEMPLATES/template_README.md -->
-
----
-
 # 🚗 Sistema de Aluguel de Carros 👨‍💻
 
 > [!NOTE]
@@ -134,10 +130,10 @@ Os diagramas (todas as versões produzidas) ficam em [`/docs`](./docs):
 
 | Diagrama | Arquivo |
 | :--- | :--- |
-| Casos de Uso | _a adicionar em `/docs`_ |
-| Histórias do Usuário | _a adicionar em `/docs`_ |
-| Classes | _a adicionar em `/docs`_ |
-| Pacotes (Visão Lógica) | _a adicionar em `/docs`_ |
+| Casos de Uso | [`casos_de_uso_v1.puml`](./docs/casos_de_uso_v1.puml) |
+| Histórias do Usuário | [`historias.md`](./docs/historias.md) |
+| Classes | [`classes_v1.puml`](./docs/classes_v1.puml) |
+| Pacotes (Visão Lógica) | [`pacotes_v1.puml`](./docs/pacotes_v1.puml) |
 
 ---
 

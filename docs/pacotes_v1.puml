@@ -1,0 +1,40 @@
+@startuml pacotes_v1
+title Diagrama de Pacotes - Visão Lógica (v1)
+skinparam packageStyle rectangle
+
+package "Front-end (React + Vite)" as FE {
+  package "pages" as fe_pages
+  package "components" as fe_components
+  package "services (api)" as fe_services
+  package "routes (PrivateRoute)" as fe_routes
+}
+
+package "Back-end (Spring Boot - br.pucminas.aluguelcarros)" as BE {
+  package "controller" as be_controller
+  package "service" as be_service
+  package "repository" as be_repository
+  package "model" as be_model
+  package "dto" as be_dto
+  package "security" as be_security
+  package "config" as be_config
+  package "exception" as be_exception
+}
+
+database "Supabase\n(PostgreSQL)" as DB
+
+fe_pages ..> fe_components
+fe_pages ..> fe_services
+fe_pages ..> fe_routes
+fe_services ..> be_controller : HTTP / JSON\n(Bearer token)
+
+be_controller ..> be_service
+be_controller ..> be_dto
+be_service ..> be_repository
+be_service ..> be_model
+be_service ..> be_dto
+be_repository ..> be_model
+be_security ..> be_service
+be_config ..> be_security
+be_controller ..> be_exception
+be_repository ..> DB : JPA / JDBC
+@enduml

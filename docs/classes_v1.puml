@@ -1,0 +1,113 @@
+@startuml classes_v1
+title Diagrama de Classes (v1) - Sistema de Aluguel de Carros
+skinparam classAttributeIconSize 0
+hide empty members
+
+enum Perfil {
+  CLIENTE
+  EMPRESA
+  BANCO
+}
+
+enum StatusPedido {
+  PENDENTE
+  EM_ANALISE
+  APROVADO
+  REPROVADO
+  CANCELADO
+  CONTRATADO
+}
+
+enum TipoContrato {
+  ALUGUEL
+  ALUGUEL_COM_CREDITO
+}
+
+abstract class Usuario {
+  - id : Long
+  - login : String
+  - senha : String
+  - perfil : Perfil
+}
+
+class Cliente {
+  - rg : String
+  - cpf : String
+  - nome : String
+  - endereco : String
+  - profissao : String
+}
+
+abstract class Agente {
+  - nome : String
+  - cnpj : String
+}
+
+class Empresa
+class Banco
+
+class Rendimento {
+  - id : Long
+  - entidadeEmpregadora : String
+  - valor : BigDecimal
+}
+
+interface Proprietario
+
+class Automovel {
+  - id : Long
+  - matricula : String
+  - ano : Integer
+  - marca : String
+  - modelo : String
+  - placa : String
+}
+
+class Pedido {
+  - id : Long
+  - data : LocalDate
+  - status : StatusPedido
+  - parecerAgente : String
+}
+
+class Contrato {
+  - id : Long
+  - tipo : TipoContrato
+  - dataInicio : LocalDate
+  - dataFim : LocalDate
+  - valor : BigDecimal
+}
+
+class ContratoCredito {
+  - id : Long
+  - valor : BigDecimal
+  - juros : BigDecimal
+}
+
+Usuario <|-- Cliente
+Usuario <|-- Agente
+Agente <|-- Empresa
+Agente <|-- Banco
+
+Usuario --> Perfil
+Pedido --> StatusPedido
+Contrato --> TipoContrato
+
+Cliente "1" *-- "0..3" Rendimento : possui
+Cliente "1" --> "0..*" Pedido : introduz
+Agente "1" --> "0..*" Pedido : avalia / modifica
+Pedido "0..*" --> "1" Automovel : refere-se a
+Pedido "1" -- "0..1" Contrato : gera
+Contrato "1" -- "0..1" ContratoCredito : associado a
+ContratoCredito "0..*" --> "1" Banco : concedido por
+
+Proprietario <|.. Cliente
+Proprietario <|.. Empresa
+Proprietario <|.. Banco
+Automovel "0..*" --> "1" Proprietario : pertence a
+
+note right of Cliente
+  Máximo de 3 rendimentos
+  (validado no service).
+end note
+@enduml
