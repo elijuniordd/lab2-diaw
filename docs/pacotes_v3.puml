@@ -1,0 +1,44 @@
+@startuml pacotes_v3
+title Diagrama de Pacotes - Visão Lógica (v3)
+skinparam packageStyle rectangle
+
+package "Front-end (React + Vite)" as FE {
+  package "pages (Login, Cadastro, Clientes, Automoveis, Pedidos, Contratos)" as fe_pages
+  package "components (Layout, PrivateRoute, formulários)" as fe_components
+  package "context (AuthContext)" as fe_context
+  package "services (api.js, auth, cliente, pedido, automovel, contrato)" as fe_services
+}
+
+package "Back-end (Spring Boot - br.pucminas.aluguelcarros)" as BE {
+  package "controller" as be_controller
+  package "service" as be_service
+  package "repository" as be_repository
+  package "model" as be_model
+  package "dto" as be_dto
+  package "security (SecurityConfig, JwtService)" as be_security
+  package "config (LocaleConfig)" as be_config
+  package "exception (GlobalExceptionHandler)" as be_exception
+}
+
+
+database "Supabase\n(PostgreSQL)" as DB
+
+fe_pages ..> fe_components
+fe_pages ..> fe_context
+fe_pages ..> fe_services
+fe_components ..> fe_context
+fe_context ..> fe_services
+fe_services ..> be_controller : HTTP / JSON\n(Bearer token)
+
+be_controller ..> be_service
+be_controller ..> be_dto
+be_service ..> be_repository
+be_service ..> be_model
+be_service ..> be_dto
+be_service ..> be_security : emite JWT
+be_service ..> be_exception : lança
+be_repository ..> be_model
+be_security ..> be_repository : UserDetailsService
+be_exception ..> be_controller : @RestControllerAdvice\n(erro -> HTTP)
+be_repository ..> DB : JPA / JDBC
+@enduml

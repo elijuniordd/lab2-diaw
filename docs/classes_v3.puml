@@ -1,0 +1,123 @@
+@startuml classes_v3
+title Diagrama de Classes (v3) - Sistema de Aluguel de Carros
+skinparam classAttributeIconSize 0
+hide empty members
+
+enum Role {
+  CLIENTE
+  AGENTE
+}
+
+enum TipoAgente {
+  EMPRESA
+  BANCO
+}
+
+enum StatusPedido {
+  PENDENTE
+  EM_ANALISE
+  APROVADO
+  REPROVADO
+  CANCELADO
+  CONTRATADO
+}
+
+enum TipoContrato {
+  ALUGUEL
+  ALUGUEL_COM_CREDITO
+}
+
+class Usuario {
+  - id : Long
+  - login : String {unique}
+  - senha : String {BCrypt}
+  - role : Role
+  - tipoAgente : TipoAgente [0..1]
+  + perfil() : String
+}
+
+class Cliente {
+  - id : Long
+  - rg : String
+  - cpf : String {unique}
+  - nome : String
+  - endereco : String
+  - profissao : String
+}
+
+class Rendimento {
+  - id : Long
+  - entidadeEmpregadora : String
+  - valor : BigDecimal
+}
+
+class Automovel {
+  - id : Long
+  - matricula : String {unique}
+  - ano : Integer
+  - marca : String
+  - modelo : String
+  - placa : String {unique}
+}
+
+class Pedido {
+  - id : Long
+  - data : LocalDate
+  - status : StatusPedido
+  - parecerAgente : String
+}
+
+class Contrato {
+  - id : Long
+  - tipo : TipoContrato
+  - dataInicio : LocalDate
+  - dataFim : LocalDate
+  - valor : BigDecimal
+  + associarCredito(c : ContratoCredito)
+}
+
+class ContratoCredito {
+  - id : Long
+  - valor : BigDecimal
+  - juros : BigDecimal
+}
+
+Usuario --> Role
+Usuario --> TipoAgente
+Pedido --> StatusPedido
+Contrato --> TipoContrato
+
+Cliente "0..1" --> "1" Usuario : conta de acesso
+Cliente "1" *-- "0..3" Rendimento : possui
+Automovel "0..*" --> "0..1" Usuario : proprietário\n(cliente, empresa ou banco)
+Pedido "0..*" --> "1" Cliente : introduzido por
+Pedido "0..*" --> "1" Automovel : refere-se a
+Pedido "0..*" --> "0..1" Usuario : agente que\navalia / modifica
+Pedido "1" -- "0..1" Contrato : gera
+Contrato "1" *-- "0..1" ContratoCredito : associado a
+ContratoCredito "0..*" --> "1" Usuario : banco que\nconcede
+
+note right of Cliente
+  Máximo de 3 rendimentos
+  (validado no DTO e na entidade).
+  Um cadastro por usuário CLIENTE.
+end note
+
+note bottom of Pedido
+  Cliente modifica enquanto PENDENTE e
+  cancela até ser CONTRATADO.
+  Agente avalia (APROVADO / REPROVADO)
+  e pode modificar (volta a EM_ANALISE).
+  Cliente executa o pedido APROVADO:
+  nasce o Contrato e o pedido vira CONTRATADO.
+end note
+
+note as N1
+  **Mudanças em relação à v2**
+  - Empresa e Banco = TipoAgente do Usuario AGENTE.
+  - Automovel passou a ter proprietário (Usuario).
+  - Contrato e ContratoCredito implementados;
+    o crédito só é concedido por um BANCO e
+    muda o contrato para ALUGUEL_COM_CREDITO.
+end note
+@enduml

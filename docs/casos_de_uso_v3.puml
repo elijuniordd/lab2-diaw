@@ -1,0 +1,75 @@
+@startuml casos_de_uso_v3
+title Diagrama de Casos de Uso (v3) - Sistema de Aluguel de Carros
+left to right direction
+skinparam packageStyle rectangle
+
+legend right
+  Todos os casos de uso estão implementados.
+endlegend
+
+actor "Usuário" as Usuario
+actor "Cliente" as Cliente
+actor "Agente" as Agente
+actor "Empresa" as Empresa
+actor "Banco" as Banco
+
+Cliente --|> Usuario
+Agente --|> Usuario
+Empresa --|> Agente
+Banco --|> Agente
+
+rectangle "Sistema de Aluguel de Carros" {
+  usecase "Cadastrar-se\n(Cliente, Empresa ou Banco)" as UC_Cadastro
+  usecase "Fazer login / sair" as UC_Login
+  usecase "Consultar automóveis\n(com proprietário)" as UC_ConsAuto
+
+  usecase "Manter dados do cliente\n(CRUD, até 3 rendimentos)" as UC_Cliente
+  usecase "Introduzir pedido" as UC_Criar
+  usecase "Consultar pedidos / status" as UC_Consultar
+  usecase "Modificar pedido\n(enquanto pendente)" as UC_Modificar
+  usecase "Cancelar pedido\n(até ser contratado)" as UC_Cancelar
+  usecase "Confirmar execução do contrato" as UC_Contratar
+  usecase "Consultar contratos" as UC_ConsContrato
+
+  usecase "Avaliar pedido\n(parecer financeiro)" as UC_Avaliar
+  usecase "Modificar pedido (agente)" as UC_ModAgente
+  usecase "Cadastrar automóveis\n(vira proprietário)" as UC_Auto
+
+  usecase "Associar contrato de crédito" as UC_Credito
+}
+
+Usuario --> UC_Cadastro
+Usuario --> UC_Login
+Usuario --> UC_ConsAuto
+
+Cliente --> UC_Cliente
+Cliente --> UC_Criar
+Cliente --> UC_Consultar
+Cliente --> UC_Modificar
+Cliente --> UC_Cancelar
+Cliente --> UC_Contratar
+Cliente --> UC_ConsContrato
+
+Agente --> UC_Consultar
+Agente --> UC_Avaliar
+Agente --> UC_ModAgente
+Agente --> UC_Auto
+Agente --> UC_ConsContrato
+Banco --> UC_Credito
+
+UC_Criar ..> UC_Login : <<include>>
+UC_Consultar ..> UC_Login : <<include>>
+UC_Contratar ..> UC_Avaliar : <<include>>\n(requer parecer positivo)
+UC_Credito .up.> UC_Contratar : <<extend>>
+
+note bottom of Banco
+  Empresa e Banco são o tipoAgente de um
+  usuário com perfil AGENTE. Só o Banco
+  associa contrato de crédito.
+end note
+
+note bottom of UC_Auto
+  O proprietário é o usuário que
+  cadastra o automóvel.
+end note
+@enduml
