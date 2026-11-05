@@ -24,17 +24,8 @@
 
 ![Versão](https://img.shields.io/badge/Versão-v0.1.0-blue?style=for-the-badge) ![Java](https://img.shields.io/badge/Java-25-007ec6?style=for-the-badge&logo=openjdk&logoColor=white) ![Spring Boot](https://img.shields.io/badge/Spring_Boot-4.0.x-007ec6?style=for-the-badge&logo=springboot&logoColor=white) ![Maven](https://img.shields.io/badge/Maven-3.9-007ec6?style=for-the-badge&logo=apachemaven&logoColor=white) ![React](https://img.shields.io/badge/React-Vite-007ec6?style=for-the-badge&logo=react&logoColor=white) ![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-007ec6?style=for-the-badge&logo=supabase&logoColor=white)
 
-**Entregas do laboratório:**
 
-- [ ] Modelagem do sistema (Casos de Uso, Histórias do Usuário, Diagrama de Classes e Diagrama de Pacotes)
-- [ ] Autenticação (login de clientes e agentes)
-- [ ] CRUD de cliente
-- [ ] Protótipo do sistema (criar e visualizar status de um pedido de aluguel)
-- [ ] Revisão dos diagramas
-
----
-
-## 📚 Índice
+##  Índice
 - [Links Úteis](#-links-úteis)
 - [Sobre o Projeto](#-sobre-o-projeto)
 - [Funcionalidades Principais](#-funcionalidades-principais)
@@ -57,14 +48,14 @@
 
 ---
 
-## 🔗 Links Úteis
-* 📖 **Modelagem UML e Histórias de Usuário:** [`/docs`](./docs)
-  > 📚 **Descrição:** Diagramas de casos de uso, classes e pacotes (todas as versões) e histórias de usuário.
-* 📄 **Enunciado do laboratório:** [PDF](./DIAW_-_LABORATÓRIO_02_-_Sistema_de_Aluguel_de_Carros.pdf)
+##  Links Úteis
+*  **Modelagem UML e Histórias de Usuário:** [`/docs`](./docs)
+  >  **Descrição:** Diagramas de casos de uso, classes e pacotes (todas as versões) e histórias de usuário.
+*  **Enunciado do laboratório:** [PDF](./DIAW_-_LABORATÓRIO_02_-_Sistema_de_Aluguel_de_Carros.pdf)
 
 ---
 
-## 📝 Sobre o Projeto
+##  Sobre o Projeto
 Pretende-se apoiar a gestão de aluguéis de automóveis, permitindo efetuar, cancelar e modificar pedidos através da Internet.
 
 - **Contexto:** trabalho acadêmico (Laboratório 02, DIAW, PUC Minas).
@@ -79,20 +70,20 @@ Pretende-se apoiar a gestão de aluguéis de automóveis, permitindo efetuar, ca
 
 ---
 
-## ✨ Funcionalidades Principais
+##  Funcionalidades Principais
 
-- 🔐 **Autenticação:** cadastro prévio e login obrigatório (usuário e senha) para clientes e agentes.
-- 👤 **CRUD de Cliente:** cadastro com dados de identificação, profissão e até 3 rendimentos.
-- 📝 **Pedidos de aluguel:** o cliente cria, modifica, consulta e cancela pedidos e acompanha o status.
-- 🏦 **Avaliação por agentes:** empresas e bancos analisam financeiramente e modificam pedidos.
-- 📑 **Contratos:** execução do contrato após parecer positivo, com contrato de crédito opcional.
-- 🚘 **Automóveis:** registro de matrícula, ano, marca, modelo, placa e proprietário.
+- **Autenticação:** cadastro prévio e login obrigatório (usuário e senha) para clientes e agentes.
+- **CRUD de Cliente:** cadastro com dados de identificação, profissão e até 3 rendimentos.
+- **Pedidos de aluguel:** o cliente cria, modifica, consulta e cancela pedidos e acompanha o status.
+- **Avaliação por agentes:** empresas e bancos analisam financeiramente e modificam pedidos.
+- **Contratos:** execução do contrato após parecer positivo, com contrato de crédito opcional.
+- **Automóveis:** registro de matrícula, ano, marca, modelo, placa e proprietário.
 
 ---
 
-## 🛠 Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
-### 💻 Front-end
+### Front-end
 
 * **Framework/Biblioteca:** React
 * **Linguagem:** JavaScript (ES6+)
@@ -100,7 +91,7 @@ Pretende-se apoiar a gestão de aluguéis de automóveis, permitindo efetuar, ca
 * **Requisições HTTP:** Axios
 * **Roteamento:** React Router
 
-### 🖥️ Back-end
+### Back-end
 
 * **Linguagem/Runtime:** Java (JDK 25)
 * **Framework:** Spring Boot 4.0.x (arquitetura MVC)
@@ -116,7 +107,7 @@ Pretende-se apoiar a gestão de aluguéis de automóveis, permitindo efetuar, ca
 
 ---
 
-## 🏗 Arquitetura
+## Arquitetura
 
 O back-end segue o padrão **MVC** em camadas (`controller` → `service` → `repository` → `model`), com **DTOs** para entrada/saída da API e tratamento global de exceções. O front-end React consome a API REST do back-end.
 
@@ -130,14 +121,16 @@ Os diagramas (todas as versões produzidas) ficam em [`/docs`](./docs):
 
 | Diagrama | Arquivo |
 | :--- | :--- |
-| Casos de Uso | [`casos_de_uso_v1.puml`](./docs/casos_de_uso_v1.puml) |
-| Histórias do Usuário | [`historias.md`](./docs/historias.md) |
-| Classes | [`classes_v1.puml`](./docs/classes_v1.puml) |
-| Pacotes (Visão Lógica) | [`pacotes_v1.puml`](./docs/pacotes_v1.puml) |
+| Casos de Uso | [`v1`](./docs/casos_de_uso_v1.puml) · [**`v2`**](./docs/casos_de_uso_v2.puml) ([png](./docs/casos_de_uso_v2.png)) |
+| Histórias do Usuário | [`historias.md`](./docs/historias.md) (com o status de implementação) |
+| Classes | [`v1`](./docs/classes_v1.puml) · [**`v2`**](./docs/classes_v2.puml) ([png](./docs/classes_v2.png)) |
+| Pacotes (Visão Lógica) | [`v1`](./docs/pacotes_v1.puml) · [**`v2`**](./docs/pacotes_v2.puml) ([png](./docs/pacotes_v2.png)) |
+
+A **v2** reflete o código implementado; o que ainda é previsto (contrato, crédito, Empresa/Banco) aparece tracejado em cinza.
 
 ---
 
-## 🔧 Instalação e Execução
+## Instalação e Execução
 
 ### Pré-requisitos
 
@@ -148,7 +141,7 @@ Os diagramas (todas as versões produzidas) ficam em [`/docs`](./docs):
 
 ---
 
-### 🔑 Variáveis de Ambiente
+### Variáveis de Ambiente
 
 #### Back-end (Spring Boot)
 
@@ -162,7 +155,6 @@ Configure como variáveis de ambiente do sistema (nunca versione senhas):
 | `SPRING_DATASOURCE_PASSWORD` | Senha do banco. | `********` |
 | `APP_JWT_SECRET` | Segredo para assinar os JWT (mín. 32 caracteres). Gere com `openssl rand -base64 48`. | `********` |
 | `APP_JWT_EXPIRATION_MINUTES` | (opcional) Validade do token em minutos. Padrão: 120. | `120` |
-| `JWT_SECRET` | Chave secreta para assinatura de tokens. | `chave_super_segura_base64` |
 
 #### Front-end (React, Vite)
 
@@ -174,7 +166,7 @@ Crie `/frontend/.env.local`:
 
 ---
 
-### 📦 Instalação de Dependências
+###  Instalação de Dependências
 
 ```bash
 git clone https://github.com/elijuniordd/lab2-diaw.git
@@ -197,7 +189,7 @@ cd ..
 
 ---
 
-### 💾 Banco de Dados (Supabase)
+###  Banco de Dados (Supabase)
 
 1. Crie um projeto em [supabase.com](https://supabase.com).
 2. Em **Connect**, copie host, porta, usuário e senha e monte a `SPRING_DATASOURCE_URL`.
@@ -205,13 +197,20 @@ cd ..
 
 ---
 
-### ⚡ Como Executar a Aplicação
+### Como Executar a Aplicação
 
 Em **dois terminais separados**:
+
+**Primeira vez: arquivo de variáveis do back-end**
+```bash
+cd backend
+cp .env.example .env        # preencha com os dados do Supabase e o APP_JWT_SECRET (o .env não vai para o git)
+```
 
 **Terminal 1: Back-end (Spring Boot)**
 ```bash
 cd backend
+set -a; source .env; set +a   # carrega as variáveis (o Maven não lê .env sozinho)
 ./mvnw spring-boot:run
 ```
 🚀 *Disponível em **http://localhost:8080**.*
@@ -223,75 +222,105 @@ npm run dev
 ```
 🎨 *Disponível em **http://localhost:5173**.*
 
----
+#### Testando o fluxo completo
 
-## 📂 Estrutura de Pastas
+1. Abra `http://localhost:5173`: sem login você é redirecionado para `/login`.
+2. **Cadastre-se** como *Cliente* e como *Agente* (duas contas) e faça login.
+3. Como **Agente**, em *Automóveis*, cadastre um automóvel.
+4. Como **Cliente**, em *Clientes*, preencha o cadastro (CPF válido, até 3 rendimentos).
+5. Como **Cliente**, em *Pedidos*, crie um *Novo pedido*: ele aparece com status **Pendente**.
+6. Como **Agente**, em *Pedidos*, avalie o pedido (aprovar/reprovar com parecer).
+7. Como **Cliente**, volte a *Pedidos* e veja o novo status e o parecer.
+
+#### Principais endpoints
+
+| Método e rota | Quem acessa |
+| :--- | :--- |
+| `GET /health` | público |
+| `POST /auth/register`, `POST /auth/login` | público |
+| `GET /auth/me` | autenticado |
+| `GET/POST/PUT/DELETE /clientes` | CLIENTE (o próprio cadastro); AGENTE só consulta |
+| `GET /automoveis` | autenticado |
+| `POST /automoveis` | AGENTE |
+| `POST /pedidos`, `PUT /pedidos/{id}`, `PUT /pedidos/{id}/cancelar` | CLIENTE (dono do pedido) |
+| `GET /pedidos`, `GET /pedidos/{id}` | CLIENTE (os seus) ou AGENTE (todos) |
+| `PUT /pedidos/{id}/avaliar` | AGENTE |
+
+
+##  Estrutura de Pastas
 
 ```
 .
-├── .gitignore                   # 🧹 Arquivos/pastas não versionados (.env, node_modules, target, etc.).
-├── README.md                    # 📘 Documentação principal do projeto.
+├── .gitignore                   #  Arquivos/pastas não versionados (.env, node_modules, target, etc.).
+├── README.md                    #  Documentação principal do projeto.
 │
-├── /frontend                    # 📁 Aplicação React + Vite
+├── /frontend                    #  Aplicação React + Vite
 │   └── /src
-│       ├── /components          # 🧱 Componentes reutilizáveis.
-│       ├── /pages               # 📄 Páginas (Login, Cadastro, Clientes, Pedidos).
-│       └── /services            # 🔌 Chamadas HTTP (Axios).
+│       ├── /components          #  Componentes reutilizáveis (Layout, PrivateRoute, formulários).
+│       ├── /context             #  AuthContext (sessão e token JWT).
+│       ├── /pages               #  Páginas (Login, Cadastro, Clientes, Automóveis, Pedidos).
+│       └── /services            #  Chamadas HTTP (Axios, com interceptor do token).
 │
-├── /backend                     # 📁 Aplicação Spring Boot
+├── /backend                     #  Aplicação Spring Boot
 │   └── /src/main/java/br/pucminas/aluguelcarros
-│       ├── /controller          # 🎮 Endpoints REST.
-│       ├── /service             # ⚙️ Regras de negócio.
-│       ├── /repository          # 🗄️ Repositórios (JPA).
-│       ├── /model               # 🧬 Entidades JPA.
-│       ├── /dto                 # ✉️ Data Transfer Objects.
-│       ├── /config              # 🔧 Configurações (CORS, etc.).
-│       ├── /exception           # 💥 Exceptions e handlers globais.
-│       └── /security            # 🛡️ Autenticação e autorização (Spring Security).
+│       ├── /controller          #  Endpoints REST.
+│       ├── /service             #  Regras de negócio.
+│       ├── /repository          #  Repositórios (JPA).
+│       ├── /model               #  Entidades JPA.
+│       ├── /dto                 #  Data Transfer Objects.
+│       ├── /config              #  Configurações (CORS, etc.).
+│       ├── /exception           #  Exceptions e handlers globais.
+│       └── /security            #  Autenticação e autorização (Spring Security).
 │
-└── /docs                        # 📚 Diagramas UML (todas as versões) e histórias de usuário.
+└── /docs                        #  Diagramas UML (todas as versões) e histórias de usuário.
 ```
 
 ---
 
-## 🎥 Demonstração
+## Demonstração
 
 _Prints e GIFs do protótipo serão adicionados conforme as telas forem implementadas (login, cadastro de clientes, criação e acompanhamento de pedidos)._
 
 ---
 
-## 🧪 Testes
+## Testes
 
 **Back-end:**
 ```bash
 cd backend
 ./mvnw test
 ```
-*Ferramenta: JUnit (Spring Boot Test).*
+*Ferramenta: JUnit (Spring Boot Test). Os testes de integração usam um banco H2 em memória, então **não dependem do Supabase** nem de variáveis de ambiente.*
 
-**Front-end:** _a definir._
-
----
-
-## 🔗 Documentações utilizadas
-
-* 📖 **Back-end:** [Spring Boot](https://docs.spring.io/spring-boot/index.html)
-* 📖 **Front-end:** [React](https://react.dev/) e [Vite](https://vitejs.dev/guide/)
-* 📖 **Banco de dados:** [Supabase](https://supabase.com/docs)
-* 📖 **Padrão de commits:** [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
+**Front-end:**
+```bash
+cd frontend
+npm run lint
+npm run build
+```
+*Ainda não há testes automatizados no front-end; o fluxo é validado manualmente (ver "Testando o fluxo completo").*
 
 ---
 
-## 👥 Autores
+##  Documentações utilizadas
 
-| 👤 Nome | :octocat: GitHub | 📤 Gmail |
+* **Back-end:** [Spring Boot](https://docs.spring.io/spring-boot/index.html)
+* **Front-end:** [React](https://react.dev/) e [Vite](https://vitejs.dev/guide/)
+* **Banco de dados:** [Supabase](https://supabase.com/docs)
+* **Padrão de commits:** [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
+
+---
+
+##  Autor
+
+| Nome | :octocat: GitHub | Gmail |
 |---------|-----------------|-----------|
-| Elias Junior Dias | [elijuniordd](https://github.com/elijuniordd) | [elijuniordias098@gmail.com](mailto:elijuniordias098@gmail.com) |
-| _Nome 2_ | _GitHub_ | _E-mail_ |
+| Eli Junior Dias | [elijuniordd](https://github.com/elijuniordd) | [elijuniordias098@gmail.com](mailto:elijuniordias098@gmail.com) |
+
 
 ---
 
-## 🤝 Contribuição
+## Contribuição
 
 1. Faça um `fork` do projeto.
 2. Crie uma branch para sua feature (`git checkout -b feature/minha-feature`).
@@ -301,13 +330,13 @@ cd backend
 
 ---
 
-## 🙏 Agradecimentos
+## Agradecimentos
 
 * [**Engenharia de Software PUC Minas**](https://www.instagram.com/engsoftwarepucminas/) - Pelo apoio institucional e estrutura acadêmica.
 * [**Prof. Dr. João Paulo Aramuni**](https://github.com/joaopauloaramuni) - Pelos ensinamentos sobre Arquitetura de Software e Padrões de Projeto, e pelo template deste README.
 
 ---
 
-## 📄 Licença
+## Licença
 
 Projeto acadêmico, desenvolvido para fins educacionais.
