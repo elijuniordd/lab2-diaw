@@ -35,4 +35,14 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private Role role;
+
+    /** Só para AGENTE: EMPRESA ou BANCO. Nulo para CLIENTE. */
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private TipoAgente tipoAgente;
+
+    /** Rótulo do perfil: CLIENTE, EMPRESA ou BANCO. */
+    public String perfil() {
+        return tipoAgente != null ? tipoAgente.name() : role.name();
+    }
 }

@@ -241,10 +241,13 @@ npm run dev
 | `GET /auth/me` | autenticado |
 | `GET/POST/PUT/DELETE /clientes` | CLIENTE (o próprio cadastro); AGENTE só consulta |
 | `GET /automoveis` | autenticado |
-| `POST /automoveis` | AGENTE |
+| `POST /automoveis` | AGENTE (quem cadastra vira o proprietário) |
 | `POST /pedidos`, `PUT /pedidos/{id}`, `PUT /pedidos/{id}/cancelar` | CLIENTE (dono do pedido) |
 | `GET /pedidos`, `GET /pedidos/{id}` | CLIENTE (os seus) ou AGENTE (todos) |
 | `PUT /pedidos/{id}/avaliar` | AGENTE |
+| `POST /contratos` (executa pedido `APROVADO`) | CLIENTE (dono do pedido) |
+| `GET /contratos`, `GET /contratos/{id}` | CLIENTE (os seus) ou AGENTE (todos) |
+| `POST /contratos/{id}/credito` | AGENTE do tipo BANCO |
 
 
 ##  Estrutura de Pastas

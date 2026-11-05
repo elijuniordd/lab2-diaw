@@ -18,10 +18,11 @@ export default function Layout() {
           <NavLink to="/clientes">Clientes</NavLink>
           <NavLink to="/automoveis">Automóveis</NavLink>
           <NavLink to="/pedidos">Pedidos</NavLink>
+          <NavLink to="/contratos">Contratos</NavLink>
         </nav>
         <div className="usuario">
           <span>
-            {sessao.login} <small className="badge">{sessao.role}</small>
+            {sessao.login} <small className="badge">{sessao.tipoAgente ?? sessao.role}</small>
           </span>
           <button className="btn btn-link" onClick={aoSair}>
             Sair

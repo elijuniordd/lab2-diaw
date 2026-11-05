@@ -93,6 +93,9 @@ export default function Automoveis() {
               <dl className="dados">
                 <div><dt>Placa</dt><dd>{a.placa}</dd></div>
                 <div><dt>Matrícula</dt><dd>{a.matricula}</dd></div>
+                {a.proprietario && (
+                  <div><dt>Proprietário</dt><dd>{a.proprietario.login} ({a.proprietario.tipo.toLowerCase()})</dd></div>
+                )}
               </dl>
             </article>
           ))}

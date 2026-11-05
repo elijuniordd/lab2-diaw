@@ -2,6 +2,8 @@ package br.pucminas.aluguelcarros.security;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
@@ -33,10 +35,20 @@ public class JwtService {
                 .subject(usuario.getLogin())
                 .issuedAt(agora)
                 .expiresAt(agora.plus(validade))
-                .claim("roles", java.util.List.of(usuario.getRole().name()))
+                .claim("roles", roles(usuario))
                 .build();
         JwsHeader header = JwsHeader.with(MacAlgorithm.HS256).build();
         return encoder.encode(JwtEncoderParameters.from(header, claims)).getTokenValue();
+    }
+
+    /** Perfil (CLIENTE/AGENTE) e, para agentes, o tipo (EMPRESA/BANCO), todos viram {@code ROLE_*}. */
+    private static List<String> roles(Usuario u) {
+        List<String> roles = new ArrayList<>();
+        roles.add(u.getRole().name());
+        if (u.getTipoAgente() != null) {
+            roles.add(u.getTipoAgente().name());
+        }
+        return roles;
     }
 
     public long expiraEmSegundos() {

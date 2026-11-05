@@ -27,6 +27,7 @@ export function AuthProvider({ children }) {
       sessao,
       autenticado: Boolean(sessao?.token),
       ehAgente: sessao?.role === 'AGENTE',
+      ehBanco: sessao?.tipoAgente === 'BANCO',
       entrar,
       sair,
     }),

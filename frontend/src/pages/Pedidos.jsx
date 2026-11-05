@@ -7,7 +7,8 @@ import StatusBadge from '../components/StatusBadge'
 import { useAuth } from '../context/AuthContext'
 import { extrairErro } from '../services/api'
 import { listarAutomoveis } from '../services/automovelService'
-import { avaliarPedido, cancelarPedido, criarPedido, listarPedidos, modificarPedido } from '../services/pedidoService'
+import ContratoForm from '../components/ContratoForm'
+import { avaliarPedido, cancelarPedido, criarContrato, criarPedido, listarPedidos, modificarPedido } from '../services/pedidoService'
 
 const CANCELAVEIS = ['PENDENTE', 'EM_ANALISE', 'APROVADO']
 const AVALIAVEIS = ['PENDENTE', 'EM_ANALISE']
@@ -23,7 +24,7 @@ export default function Pedidos() {
   const [erro, setErro] = useState('')
   const [aviso, setAviso] = useState('')
   const [novo, setNovo] = useState(false)
-  const [acao, setAcao] = useState(null) // { tipo: 'editar' | 'avaliar', id }
+  const [acao, setAcao] = useState(null) // { tipo: 'editar' | 'avaliar' | 'contratar', id }
 
   const carregar = useCallback(async () => {
     try {
@@ -98,6 +99,7 @@ export default function Pedidos() {
             const podeAvaliar = ehAgente && AVALIAVEIS.includes(p.status)
             const podeEditar = ehAgente ? AVALIAVEIS.includes(p.status) : p.status === 'PENDENTE'
             const podeCancelar = !ehAgente && CANCELAVEIS.includes(p.status)
+            const podeContratar = !ehAgente && p.status === 'APROVADO'
             const renda = p.cliente.rendimentos.reduce((soma, r) => soma + Number(r.valor), 0)
             return (
               <article className="cartao" key={p.id}>
@@ -137,8 +139,16 @@ export default function Pedidos() {
                   />
                 )}
 
-                {!editando && (podeAvaliar || podeEditar || podeCancelar) && (
+                {editando && acao.tipo === 'contratar' && (
+                  <ContratoForm
+                    onSalvar={async (dados) => { await criarContrato({ pedidoId: p.id, ...dados }); await concluir('Contrato executado! Veja em Contratos.') }}
+                    onCancelar={() => setAcao(null)}
+                  />
+                )}
+
+                {!editando && (podeAvaliar || podeEditar || podeCancelar || podeContratar) && (
                   <div className="acoes">
+                    {podeContratar && <button className="btn btn-primario" onClick={() => abrirAcao('contratar', p.id)}>Executar contrato</button>}
                     {podeAvaliar && <button className="btn btn-primario" onClick={() => abrirAcao('avaliar', p.id)}>Avaliar</button>}
                     {podeEditar && <button className="btn" onClick={() => abrirAcao('editar', p.id)}>Trocar automóvel</button>}
                     {podeCancelar && <button className="btn btn-perigo" onClick={() => cancelar(p)}>Cancelar pedido</button>}

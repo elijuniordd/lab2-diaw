@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,7 +35,7 @@ public class AutomovelController {
     @PostMapping
     @PreAuthorize("hasRole('AGENTE')")
     @ResponseStatus(HttpStatus.CREATED)
-    public AutomovelResponse criar(@Valid @RequestBody AutomovelRequest req) {
-        return service.criar(req);
+    public AutomovelResponse criar(Authentication auth, @Valid @RequestBody AutomovelRequest req) {
+        return service.criar(auth.getName(), req);
     }
 }

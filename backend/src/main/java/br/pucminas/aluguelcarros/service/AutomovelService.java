@@ -10,6 +10,7 @@ import br.pucminas.aluguelcarros.dto.AutomovelResponse;
 import br.pucminas.aluguelcarros.exception.ConflitoException;
 import br.pucminas.aluguelcarros.model.Automovel;
 import br.pucminas.aluguelcarros.repository.AutomovelRepository;
+import br.pucminas.aluguelcarros.repository.UsuarioRepository;
 
 @Service
 @Transactional
@@ -17,8 +18,11 @@ public class AutomovelService {
 
     private final AutomovelRepository automoveis;
 
-    public AutomovelService(AutomovelRepository automoveis) {
+    private final UsuarioRepository usuarios;
+
+    public AutomovelService(AutomovelRepository automoveis, UsuarioRepository usuarios) {
         this.automoveis = automoveis;
+        this.usuarios = usuarios;
     }
 
     @Transactional(readOnly = true)
@@ -26,7 +30,7 @@ public class AutomovelService {
         return automoveis.findAll().stream().map(AutomovelResponse::de).toList();
     }
 
-    public AutomovelResponse criar(AutomovelRequest req) {
+    public AutomovelResponse criar(String login, AutomovelRequest req) {
         String matricula = req.matricula().trim();
         String placa = req.placa().replace("-", "").toUpperCase();
         if (automoveis.existsByMatricula(matricula)) {
@@ -35,7 +39,8 @@ public class AutomovelService {
         if (automoveis.existsByPlaca(placa)) {
             throw new ConflitoException("Placa já cadastrada");
         }
-        Automovel a = new Automovel(null, matricula, req.ano(), req.marca().trim(), req.modelo().trim(), placa);
+        Automovel a = new Automovel(null, matricula, req.ano(), req.marca().trim(), req.modelo().trim(), placa,
+                usuarios.findByLogin(login).orElseThrow());
         return AutomovelResponse.de(automoveis.save(a));
     }
 }

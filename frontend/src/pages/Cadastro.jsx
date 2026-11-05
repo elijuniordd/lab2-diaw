@@ -9,7 +9,7 @@ import { registrar } from '../services/authService'
 export default function Cadastro() {
   const { autenticado } = useAuth()
   const navigate = useNavigate()
-  const [form, setForm] = useState({ login: '', senha: '', role: 'CLIENTE' })
+  const [form, setForm] = useState({ login: '', senha: '', perfil: 'CLIENTE' })
   const [erro, setErro] = useState({ mensagem: '', campos: {} })
   const [enviando, setEnviando] = useState(false)
 
@@ -22,7 +22,8 @@ export default function Cadastro() {
     setErro({ mensagem: '', campos: {} })
     setEnviando(true)
     try {
-      await registrar(form.login.trim(), form.senha, form.role)
+      const agente = form.perfil !== 'CLIENTE'
+      await registrar(form.login.trim(), form.senha, agente ? 'AGENTE' : 'CLIENTE', agente ? form.perfil : undefined)
       navigate('/login', { replace: true, state: { mensagem: 'Conta criada! Faça login para continuar.' } })
     } catch (err) {
       setErro(extrairErro(err))
@@ -41,9 +42,10 @@ export default function Cadastro() {
         <Campo label="Senha (mín. 6 caracteres)" type="password" value={form.senha} onChange={alterar('senha')} erro={erro.campos.senha} autoComplete="new-password" required />
         <label className="campo">
           <span>Perfil</span>
-          <select value={form.role} onChange={alterar('role')}>
+          <select value={form.perfil} onChange={alterar('perfil')}>
             <option value="CLIENTE">Cliente</option>
-            <option value="AGENTE">Agente (empresa/banco)</option>
+            <option value="EMPRESA">Agente - Empresa</option>
+            <option value="BANCO">Agente - Banco</option>
           </select>
         </label>
         <button className="btn btn-primario" disabled={enviando}>

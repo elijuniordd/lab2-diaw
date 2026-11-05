@@ -12,6 +12,7 @@ import br.pucminas.aluguelcarros.dto.TokenResponse;
 import br.pucminas.aluguelcarros.dto.UsuarioResponse;
 import br.pucminas.aluguelcarros.exception.ConflitoException;
 import br.pucminas.aluguelcarros.model.Role;
+import br.pucminas.aluguelcarros.model.TipoAgente;
 import br.pucminas.aluguelcarros.model.Usuario;
 import br.pucminas.aluguelcarros.repository.UsuarioRepository;
 import br.pucminas.aluguelcarros.security.JwtService;
@@ -38,7 +39,11 @@ public class AuthService {
             throw new ConflitoException("Login já está em uso");
         }
         Role role = req.role() != null ? req.role() : Role.CLIENTE;
-        Usuario novo = new Usuario(null, req.login(), encoder.encode(req.senha()), role);
+        TipoAgente tipo = null;
+        if (role == Role.AGENTE) {
+            tipo = req.tipoAgente() != null ? req.tipoAgente() : TipoAgente.EMPRESA;
+        }
+        Usuario novo = new Usuario(null, req.login(), encoder.encode(req.senha()), role, tipo);
         return UsuarioResponse.de(usuarios.save(novo));
     }
 
@@ -46,7 +51,8 @@ public class AuthService {
         // Lança BadCredentialsException (-> 401) se login/senha estiverem errados.
         authManager.authenticate(new UsernamePasswordAuthenticationToken(req.login(), req.senha()));
         Usuario u = usuarios.findByLogin(req.login()).orElseThrow();
-        return new TokenResponse(jwt.gerar(u), "Bearer", jwt.expiraEmSegundos(), u.getLogin(), u.getRole());
+        return new TokenResponse(jwt.gerar(u), "Bearer", jwt.expiraEmSegundos(), u.getLogin(), u.getRole(),
+                u.getTipoAgente());
     }
 
     public UsuarioResponse buscar(String login) {

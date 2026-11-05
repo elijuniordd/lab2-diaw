@@ -67,12 +67,13 @@ PENDENTE ──(agente inicia análise)──> EM_ANALISE ──(parecer positiv
 | ✅ Implementada | US04, US05, US06 | CRUD de cliente com CPF único e no máximo 3 rendimentos; exclusão pede confirmação. Um cadastro de cliente por usuário. |
 | ✅ Implementada | US07, US08, US09, US10 | Pedido nasce `PENDENTE`; cliente vê só os seus; modifica enquanto `PENDENTE`; cancela até ser `CONTRATADO`. |
 | ✅ Implementada | US12, US13, US14 | Agente lista todos os pedidos com os rendimentos do cliente, avalia com parecer (`APROVADO`/`REPROVADO`) e, ao modificar, o pedido vai para `EM_ANALISE`. |
-| 🟡 Parcial | US15, US17 | Agentes cadastram automóveis (matrícula e placa únicas) e qualquer usuário os consulta. Ainda **não** há proprietário do automóvel, nem distinção entre Empresa e Banco. |
-| ⏳ Prevista | US11 | Confirmação do contrato pelo cliente (`APROVADO` -> `CONTRATADO`) depende da entidade Contrato. |
-| ⏳ Prevista | US16 | Contrato de crédito associado a um aluguel, concedido por um Banco. |
+| ✅ Implementada | US11 | Cliente executa pedido `APROVADO` (`POST /contratos`): nasce o `Contrato` e o pedido vira `CONTRATADO`. |
+| ✅ Implementada | US15, US17 | Agentes cadastram automóveis (matrícula e placa únicas); o cadastrante vira o proprietário (cliente, empresa ou banco) e qualquer usuário consulta. |
+| ✅ Implementada | US16 | Banco associa `ContratoCredito` (valor e juros) ao contrato, uma única vez; o contrato passa a `ALUGUEL_COM_CREDITO`. |
 
 **Decisões de projeto em relação à v1**
-- Existem apenas dois perfis (`CLIENTE` e `AGENTE`); Empresa e Banco serão especializações de Agente quando o contrato for implementado.
+- Existem dois perfis (`CLIENTE` e `AGENTE`); Empresa e Banco são o `tipoAgente` do usuário AGENTE (padrão `EMPRESA` se omitido no cadastro).
+- Automóveis só são cadastrados por agentes, então hoje o proprietário é uma empresa ou um banco; o modelo (`Usuario`) já comporta cliente como dono.
 - O agente pode avaliar um pedido direto de `PENDENTE`; o status `EM_ANALISE` é atingido quando o agente modifica o pedido.
 - Apenas o cliente cancela o próprio pedido (US10).
 - Um cliente com pedidos não pode ser removido (evita pedidos órfãos).
