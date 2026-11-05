@@ -1,6 +1,6 @@
 # Histórias de Usuário — Sistema de Aluguel de Carros
 
-> Versão 1. Atores: **Cliente** (usuário individual) e **Agente** (especializações **Empresa** e **Banco**).
+> Versão 1 (texto original) + **status de implementação** ao final do documento. Atores: **Cliente** (usuário individual) e **Agente** (especializações **Empresa** e **Banco**).
 
 ## Autenticação
 
@@ -58,3 +58,21 @@ PENDENTE ──(agente inicia análise)──> EM_ANALISE ──(parecer positiv
 - Sistema **web**, com servidor central acessado pela Internet.
 - Back-end em **Spring Boot 4.0.x (Java 25)** com arquitetura **MVC**; front-end **React + Vite**; banco **Supabase (PostgreSQL)**.
 - **Login obrigatório** para qualquer uso.
+
+## Status de implementação (Fase 8)
+
+| Situação | Histórias | Observação |
+|----------|-----------|------------|
+| ✅ Implementada | US01, US02, US03 | Cadastro com senha BCrypt, login com JWT e logout no front. O cadastro aceita os perfis CLIENTE e AGENTE. |
+| ✅ Implementada | US04, US05, US06 | CRUD de cliente com CPF único e no máximo 3 rendimentos; exclusão pede confirmação. Um cadastro de cliente por usuário. |
+| ✅ Implementada | US07, US08, US09, US10 | Pedido nasce `PENDENTE`; cliente vê só os seus; modifica enquanto `PENDENTE`; cancela até ser `CONTRATADO`. |
+| ✅ Implementada | US12, US13, US14 | Agente lista todos os pedidos com os rendimentos do cliente, avalia com parecer (`APROVADO`/`REPROVADO`) e, ao modificar, o pedido vai para `EM_ANALISE`. |
+| 🟡 Parcial | US15, US17 | Agentes cadastram automóveis (matrícula e placa únicas) e qualquer usuário os consulta. Ainda **não** há proprietário do automóvel, nem distinção entre Empresa e Banco. |
+| ⏳ Prevista | US11 | Confirmação do contrato pelo cliente (`APROVADO` -> `CONTRATADO`) depende da entidade Contrato. |
+| ⏳ Prevista | US16 | Contrato de crédito associado a um aluguel, concedido por um Banco. |
+
+**Decisões de projeto em relação à v1**
+- Existem apenas dois perfis (`CLIENTE` e `AGENTE`); Empresa e Banco serão especializações de Agente quando o contrato for implementado.
+- O agente pode avaliar um pedido direto de `PENDENTE`; o status `EM_ANALISE` é atingido quando o agente modifica o pedido.
+- Apenas o cliente cancela o próprio pedido (US10).
+- Um cliente com pedidos não pode ser removido (evita pedidos órfãos).

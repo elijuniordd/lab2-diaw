@@ -1,0 +1,64 @@
+@startuml casos_de_uso_v2
+title Diagrama de Casos de Uso (v2) - Sistema de Aluguel de Carros
+left to right direction
+skinparam packageStyle rectangle
+
+legend right
+  Linha cheia: implementado (Fases 3 a 7)
+  Tracejado cinza: previsto, ainda não implementado
+endlegend
+
+actor "Usuário" as Usuario
+actor "Cliente" as Cliente
+actor "Agente" as Agente
+
+Cliente --|> Usuario
+Agente --|> Usuario
+
+rectangle "Sistema de Aluguel de Carros" {
+  usecase "Cadastrar-se\n(perfil Cliente ou Agente)" as UC_Cadastro
+  usecase "Fazer login / sair" as UC_Login
+  usecase "Consultar automóveis" as UC_ConsAuto
+
+  usecase "Manter dados do cliente\n(CRUD, até 3 rendimentos)" as UC_Cliente
+  usecase "Introduzir pedido" as UC_Criar
+  usecase "Consultar pedidos / status" as UC_Consultar
+  usecase "Modificar pedido\n(enquanto pendente)" as UC_Modificar
+  usecase "Cancelar pedido" as UC_Cancelar
+
+  usecase "Avaliar pedido\n(parecer financeiro)" as UC_Avaliar
+  usecase "Modificar pedido (agente)" as UC_ModAgente
+  usecase "Cadastrar automóveis" as UC_Auto
+
+  usecase "Confirmar execução do contrato" as UC_Contratar #E4E4E4;line:808080;line.dashed;text:666666
+  usecase "Associar contrato de crédito" as UC_Credito #E4E4E4;line:808080;line.dashed;text:666666
+}
+
+Usuario --> UC_Cadastro
+Usuario --> UC_Login
+Usuario --> UC_ConsAuto
+
+Cliente --> UC_Cliente
+Cliente --> UC_Criar
+Cliente --> UC_Consultar
+Cliente --> UC_Modificar
+Cliente --> UC_Cancelar
+Cliente --> UC_Contratar
+
+Agente --> UC_Consultar
+Agente --> UC_Avaliar
+Agente --> UC_ModAgente
+Agente --> UC_Auto
+Agente --> UC_Credito
+
+UC_Criar ..> UC_Login : <<include>>
+UC_Consultar ..> UC_Login : <<include>>
+UC_Contratar ..> UC_Avaliar : <<include>>\n(requer parecer positivo)
+UC_Credito .up.> UC_Contratar : <<extend>>
+
+note bottom of Agente
+  Empresa e Banco (especializações de Agente)
+  seguem previstos; por ora há um único
+  perfil AGENTE.
+end note
+@enduml

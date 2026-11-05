@@ -1,0 +1,117 @@
+@startuml classes_v2
+title Diagrama de Classes (v2) - Sistema de Aluguel de Carros
+skinparam classAttributeIconSize 0
+hide empty members
+
+legend right
+  Linha cheia: implementado (Fases 3 a 7)
+  Tracejado cinza: previsto, ainda não implementado
+endlegend
+
+enum Role {
+  CLIENTE
+  AGENTE
+}
+
+enum StatusPedido {
+  PENDENTE
+  EM_ANALISE
+  APROVADO
+  REPROVADO
+  CANCELADO
+  CONTRATADO
+}
+
+enum TipoContrato #E4E4E4;line:808080;line.dashed;text:666666 {
+  ALUGUEL
+  ALUGUEL_COM_CREDITO
+}
+
+class Usuario {
+  - id : Long
+  - login : String {unique}
+  - senha : String {BCrypt}
+  - role : Role
+}
+
+class Cliente {
+  - id : Long
+  - rg : String
+  - cpf : String {unique}
+  - nome : String
+  - endereco : String
+  - profissao : String
+}
+
+class Rendimento {
+  - id : Long
+  - entidadeEmpregadora : String
+  - valor : BigDecimal
+}
+
+class Automovel {
+  - id : Long
+  - matricula : String {unique}
+  - ano : Integer
+  - marca : String
+  - modelo : String
+  - placa : String {unique}
+}
+
+class Pedido {
+  - id : Long
+  - data : LocalDate
+  - status : StatusPedido
+  - parecerAgente : String
+}
+
+class Contrato #E4E4E4;line:808080;line.dashed;text:666666 {
+  - id : Long
+  - tipo : TipoContrato
+  - dataInicio : LocalDate
+  - dataFim : LocalDate
+  - valor : BigDecimal
+}
+
+class ContratoCredito #E4E4E4;line:808080;line.dashed;text:666666 {
+  - id : Long
+  - valor : BigDecimal
+  - juros : BigDecimal
+}
+
+Usuario --> Role
+Pedido --> StatusPedido
+Contrato --> TipoContrato
+
+Cliente "0..1" --> "1" Usuario : conta de acesso
+Cliente "1" *-- "0..3" Rendimento : possui
+Pedido "0..*" --> "1" Cliente : introduzido por
+Pedido "0..*" --> "1" Automovel : refere-se a
+Pedido "0..*" --> "0..1" Usuario : agente que\navalia / modifica
+Pedido "1" -- "0..1" Contrato : gera
+Contrato "1" -- "0..1" ContratoCredito : associado a
+
+note right of Cliente
+  Máximo de 3 rendimentos
+  (validado no DTO e na entidade).
+  Um cadastro por usuário CLIENTE.
+end note
+
+note bottom of Pedido
+  Cliente modifica enquanto PENDENTE e
+  cancela até ser CONTRATADO.
+  Agente avalia (APROVADO / REPROVADO)
+  e pode modificar (volta a EM_ANALISE).
+end note
+
+note as N1
+  **Mudanças em relação à v1**
+  - Cliente deixou de herdar de Usuario: passou a
+    ser associação 1:1 (Cliente -> Usuario).
+  - Perfil virou Role {CLIENTE, AGENTE}; Agente,
+    Empresa e Banco ainda não foram especializados.
+  - Pedido passou a registrar o agente responsável.
+  - Proprietario, Contrato e ContratoCredito
+    seguem previstos para a próxima etapa.
+end note
+@enduml
